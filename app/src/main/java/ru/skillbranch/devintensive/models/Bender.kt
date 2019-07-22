@@ -16,12 +16,12 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
         return if(question.answers.contains(answer) || question.ordinal == Question.values().lastIndex) {
             question = question.nextQuesstion()
-            "Отлично - ты справился!\n${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
         }else{
             iTryCnt = iTryCnt+1
             if (iTryCnt < 4) {
                 status = status.nextStatus()
-                "Это не правильный ответ\n${question.question}" to status.color
+                "Это неправильный ответ\n${question.question}" to status.color
             }else{
                 iTryCnt = 0
                 status = Status.NORMAL
