@@ -12,6 +12,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.models.Bender
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var benderImage: ImageView
     lateinit var textTxt: TextView
@@ -32,7 +33,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
+        val cntTry = savedInstanceState?.getInt("CNT_TRY") ?: 0
         benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question))
+        benderObj.iTryCnt = cntTry
 
         Log.d("M_MainActivity", "onCreate $status $question")
 
@@ -41,6 +44,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         //textTxt.setText(benderObj.askQuestion())
         textTxt.text = benderObj.askQuestion()
+        if (cntTry != 0 && cntTry <4 ) {
+            textTxt.text = "Это неправильный ответ\n" + textTxt.text
+        }else{
+            if (cntTry > 3) {
+                textTxt.text = "Это неправильный ответ. Давай все по новой\n" + textTxt.text
+            }
+        }
         sendBtn.setOnClickListener(this)
     }
 
@@ -74,6 +84,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         outState?.putString("STATUS", benderObj.status.name)
         outState?.putString("QUESTION", benderObj.question.name)
+        outState?.putInt("CNT_TRY", benderObj.iTryCnt)
         Log.d("M_MainActivity", "onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}")
     }
 

@@ -19,7 +19,7 @@ class Bender(var status:Status = Status.NORMAL, var question:Question = Question
             "Отлично - ты справился\n${question.question}" to status.color
         }else{
             iTryCnt = iTryCnt+1
-            if (iTryCnt < 5) {
+            if (iTryCnt < 4) {
                 status = status.nextStatus()
                 "Это неправильный ответ\n${question.question}" to status.color
             }else{
