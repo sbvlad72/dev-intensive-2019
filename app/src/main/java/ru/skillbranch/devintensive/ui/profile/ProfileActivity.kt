@@ -73,6 +73,7 @@ class ProfileActivity : AppCompatActivity() {
         )
 
         isEditMode = savedInstanceState?.getBoolean(IS_EDIT_MODE, false) ?: false
+        showCurrentMode(isEditMode)
 
         btn_edit.setOnClickListener {
             if (isEditMode) saveProfileInfo()
@@ -136,7 +137,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState?.putBoolean(IS_EDIT_MODE, isEditMode)
 
-        //Log.d("M_MainActivity", "onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}")
+        Log.d("M_MainActivity", "onSaveInstanceState isEditMode ${isEditMode}")
     }
 
  //   override fun onClick(v: View?) {
